@@ -1,0 +1,3 @@
+apiVersion: keycloak.config.openshift.io/v1alpha
+kind: KeycloakOperator
+projectName: keycloak-operator

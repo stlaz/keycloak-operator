@@ -1,0 +1,4 @@
+apiVersion: "keycloak.config.openshift.io/v1alpha"
+kind: "KeycloakOperator"
+metadata:
+  name: "example"
