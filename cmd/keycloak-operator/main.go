@@ -5,12 +5,15 @@ import (
 	"runtime"
 	"time"
 
-	stub "github.com/openshift/keycloak-operator/pkg/stub"
-	sdk "github.com/operator-framework/operator-sdk/pkg/sdk"
-	k8sutil "github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
+	"github.com/openshift/keycloak-operator/pkg/keycloak"
+	"github.com/openshift/keycloak-operator/pkg/stub"
+
+	"github.com/operator-framework/operator-sdk/pkg/sdk"
+	"github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
 	sdkVersion "github.com/operator-framework/operator-sdk/version"
 
 	"github.com/sirupsen/logrus"
+
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 )
 
@@ -23,12 +26,7 @@ func printVersion() {
 func main() {
 	printVersion()
 
-	sdk.ExposeMetricsPort()
-	metrics, err := stub.RegisterOperatorMetrics()
-	if err != nil {
-		logrus.Errorf("failed to register operator specific metrics: %v", err)
-	}
-	h := stub.NewHandler(metrics)
+	h := stub.NewHandler()
 
 	resource := "keycloak.config.openshift.io/v1alpha"
 	kind := "KeycloakOperator"
@@ -36,8 +34,19 @@ func main() {
 	if err != nil {
 		logrus.Fatalf("failed to get watch namespace: %v", err)
 	}
-	resyncPeriod := time.Duration(5) * time.Second
+	resyncPeriod := time.Duration(10) * time.Minute
 	logrus.Infof("Watching %s, %s, %s, %d", resource, kind, namespace, resyncPeriod)
+
+	config := keycloak.KeycloakConfig{
+		appName:                "keycloak",
+		adminUsername:          "admin",
+		adminPassword:          "leCheval123",
+		proxyAddressForwarding: true,
+		dbVendor:               keycloak.DBH2,
+		loglevel:               keycloak.LOGDEBUG,
+	}
+	keycloak.CreateNewDeployment(config)
+
 	sdk.Watch(resource, kind, namespace, resyncPeriod)
 	sdk.Handle(h)
 	sdk.Run(context.TODO())

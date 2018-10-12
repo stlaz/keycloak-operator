@@ -15,7 +15,7 @@ spec:
       serviceAccountName: keycloak-operator
       containers:
         - name: keycloak-operator
-          image: REPLACE_IMAGE
+          image: stlaz/keycloak-operator
           ports:
           - containerPort: 60000
             name: metrics
