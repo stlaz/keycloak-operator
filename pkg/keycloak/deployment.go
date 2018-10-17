@@ -28,26 +28,26 @@ const (
 )
 
 type KeycloakConfig struct {
-	appName                string
-	adminUsername          string
-	adminPassword          string
-	proxyAddressForwarding bool
-	dbVendor               string
-	loglevel               string
-	hostnameHTTP           string
-	hostnameHTTPS          string
+	AppName                string
+	AdminUsername          string
+	AdminPassword          string
+	ProxyAddressForwarding bool
+	DbVendor               string
+	Loglevel               string
+	HostnameHTTP           string
+	HostnameHTTPS          string
 }
 
-func CreateNewDeployment(config KeycloakConfig) {) {
+func CreateNewDeployment(config KeycloakConfig) {
 	// TODO:
 	//     call adm ca create-server-cert
 	//     separate only certs from the ^.crt file (possibly not necessary?)
 	// 	   create server and client tls secrets
 
 	//  create a keycloak deployment
-	sdk.Create(newPersistenVolumeClaim(config.appName + "-data"))
-	sdk.Create(newService(config.appName))
-	skd.Create(newDeployment(config))
+	sdk.Create(newPersistenVolumeClaim(config.AppName + "-data"))
+	sdk.Create(newService(config.AppName))
+	sdk.Create(newDeployment(config))
 }
 
 func newPersistenVolumeClaim(name string) *corev1.PersistentVolumeClaim {
@@ -130,10 +130,10 @@ func newDeployment(config KeycloakConfig) *apps.DeploymentConfig {
 	labels := map[string]string{}
 	selectors := map[string]string{}
 	podLabels := map[string]string{}
-	labels["application"] = config.appName
-	selectors["deploymentConfig"] = config.appName
-	podLabels["deploymentConfig"] = config.appName
-	podLabels["application"] = config.appName
+	labels["application"] = config.AppName
+	selectors["deploymentConfig"] = config.AppName
+	podLabels["deploymentConfig"] = config.AppName
+	podLabels["application"] = config.AppName
 
 	return &apps.DeploymentConfig{
 		TypeMeta: metav1.TypeMeta{
@@ -141,7 +141,7 @@ func newDeployment(config KeycloakConfig) *apps.DeploymentConfig {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:   config.appName,
+			Name:   config.AppName,
 			Labels: labels,
 		},
 		Spec: apps.DeploymentConfigSpec{
@@ -153,12 +153,12 @@ func newDeployment(config KeycloakConfig) *apps.DeploymentConfig {
 			Selector: selectors,
 			Template: &corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: config.appName,
+					Name: config.AppName,
 				},
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						corev1.Container{
-							Name: config.appName,
+							Name: config.AppName,
 							// TODO: have the image configurable
 							Image:           "jboss/keycloak:nightly-openshift-integration2",
 							ImagePullPolicy: "always",
@@ -180,11 +180,11 @@ func newDeployment(config KeycloakConfig) *apps.DeploymentConfig {
 								},
 							},
 							Env: []corev1.EnvVar{
-								{Name: "KEYCLOAK_USER", Value: config.adminUsername},
-								{Name: "KEYCLOAK_PASSWORD", Value: config.adminPassword},
-								{Name: "DB_VENDOR", Value: config.dbVendor},
-								{Name: "PROXY_ADDRESS_FORWARDING", Value: fmt.Sprintf("%v", config.proxyAddressForwarding)},
-								{Name: "KEYCLOAK_LOGLEVEL", Value: config.loglevel},
+								{Name: "KEYCLOAK_USER", Value: config.AdminUsername},
+								{Name: "KEYCLOAK_PASSWORD", Value: config.AdminPassword},
+								{Name: "DB_VENDOR", Value: config.DbVendor},
+								{Name: "PROXY_ADDRESS_FORWARDING", Value: fmt.Sprintf("%v", config.ProxyAddressForwarding)},
+								{Name: "KEYCLOAK_LOGLEVEL", Value: config.Loglevel},
 								{Name: "X509_CA_BUNDLE", Value: CABundlePath},
 							},
 							SecurityContext: &corev1.SecurityContext{
@@ -204,7 +204,7 @@ func newDeployment(config KeycloakConfig) *apps.DeploymentConfig {
 							},
 							VolumeMounts: []corev1.VolumeMount{
 								corev1.VolumeMount{
-									Name:      config.appName + "-data",
+									Name:      config.AppName + "-data",
 									MountPath: "/opt/jboss/keycloak/standalone/data",
 									ReadOnly:  false,
 								},
@@ -242,7 +242,7 @@ func newDeployment(config KeycloakConfig) *apps.DeploymentConfig {
 							Name: "keycloak-data",
 							VolumeSource: corev1.VolumeSource{
 								PersistentVolumeClaim: &corev1.PersistentVolumeClaimVolumeSource{
-									ClaimName: config.appName + "-data",
+									ClaimName: config.AppName + "-data",
 								},
 							},
 						},

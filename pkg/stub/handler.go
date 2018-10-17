@@ -25,6 +25,14 @@ func (h *Handler) Handle(ctx context.Context, event sdk.Event) error {
 	// 		return err
 	// 	}
 	// }
-	keycloak.CreateNewDeployment()
+	config := keycloak.KeycloakConfig{
+		AppName:                "keycloak",
+		AdminUsername:          "admin",
+		AdminPassword:          "leCheval123",
+		ProxyAddressForwarding: true,
+		DbVendor:               keycloak.DBH2,
+		Loglevel:               keycloak.LOGDEBUG,
+	}
+	keycloak.CreateNewDeployment(config)
 	return nil
 }

@@ -5,13 +5,10 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/openshift/keycloak-operator/pkg/keycloak"
-	"github.com/openshift/keycloak-operator/pkg/stub"
-
-	"github.com/operator-framework/operator-sdk/pkg/sdk"
-	"github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
+	stub "github.com/openshift/keycloak-operator/pkg/stub"
+	sdk "github.com/operator-framework/operator-sdk/pkg/sdk"
+	k8sutil "github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
 	sdkVersion "github.com/operator-framework/operator-sdk/version"
-
 	"github.com/sirupsen/logrus"
 
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
@@ -36,16 +33,6 @@ func main() {
 	}
 	resyncPeriod := time.Duration(10) * time.Minute
 	logrus.Infof("Watching %s, %s, %s, %d", resource, kind, namespace, resyncPeriod)
-
-	config := keycloak.KeycloakConfig{
-		appName:                "keycloak",
-		adminUsername:          "admin",
-		adminPassword:          "leCheval123",
-		proxyAddressForwarding: true,
-		dbVendor:               keycloak.DBH2,
-		loglevel:               keycloak.LOGDEBUG,
-	}
-	keycloak.CreateNewDeployment(config)
 
 	sdk.Watch(resource, kind, namespace, resyncPeriod)
 	sdk.Handle(h)
