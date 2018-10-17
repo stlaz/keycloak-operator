@@ -7,7 +7,7 @@ import:
 - package: github.com/openshift/api
   version: master
 - package: github.com/operator-framework/operator-sdk
-  version: v0.0.6
+  version: 0.0.7
   subpackages:
   - pkg/sdk
   - pkg/util/k8sutil

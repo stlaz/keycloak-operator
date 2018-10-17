@@ -1,5 +1,5 @@
-hash: fe97e99050eae4f35a618548301c318dee98611fa0e4746cee179cefae069230
-updated: 2018-10-15T14:41:39.413673276+02:00
+hash: 5cc0a551f7cc7c58baeda268f5203b0e9a3e39cc2a1a64b3a665ab41d83a5478
+updated: 2018-10-17T12:25:29.967899466+02:00
 imports:
 - name: cloud.google.com/go
   version: 3b1ae45394a234c385be014e9a488f2bb6eef821
@@ -7,7 +7,7 @@ imports:
   - compute/metadata
   - internal
 - name: github.com/beorn7/perks
-  version: 3ac7bf7a47d159a033b107610db8a1b6575507a4
+  version: 3a771d992973f24aa725d07868b467d1ddfceafb
   subpackages:
   - quantile
 - name: github.com/davecgh/go-spew
@@ -56,7 +56,7 @@ imports:
 - name: github.com/konsorten/go-windows-terminal-sequences
   version: 5c8c8bd35d3832f5d134ae1e1e375b69a4d25242
 - name: github.com/matttproud/golang_protobuf_extensions
-  version: fc2b8d3a73c4867e51861bbdd5ae3c1f0869dd6a
+  version: c12348ce28de40eed0136aa2b644d0ee0650e56c
   subpackages:
   - pbutil
 - name: github.com/modern-go/concurrent
@@ -64,12 +64,12 @@ imports:
 - name: github.com/modern-go/reflect2
   version: 05fbef0ca5da472bbf96c9322b84a53edc03c9fd
 - name: github.com/openshift/api
-  version: 8c94a0d082abb4111a0e8981b7f463dd578878d3
+  version: a46029836bdc207f9949fc5f4907f0bfd3cf7763
   subpackages:
   - apps/v1
   - route/v1
 - name: github.com/operator-framework/operator-sdk
-  version: cb89692cdd145f084798749c16baaf44a6e62cac
+  version: e5a0ab096e1a7c0e6b937d2b41707eccb82c3c77
   subpackages:
   - pkg/k8sclient
   - pkg/sdk
@@ -79,7 +79,7 @@ imports:
 - name: github.com/peterbourgon/diskv
   version: 5f041e8faa004a95c88a202771f4cc3e991971e6
 - name: github.com/prometheus/client_golang
-  version: 7866eead363ec334628dbc56e32df590a05f4696
+  version: 1cafe34db7fdec6022e17e00e1c1ea501022f3e4
   subpackages:
   - prometheus
   - prometheus/internal
@@ -89,21 +89,23 @@ imports:
   subpackages:
   - go
 - name: github.com/prometheus/common
-  version: 13ba4ddd0caa9c28ca7b7bffe1dfa9ed8d5ef207
+  version: bcb74de08d37a417cb6789eec1d6c810040f0470
   subpackages:
   - expfmt
   - internal/bitbucket.org/ww/goautoneg
   - model
 - name: github.com/prometheus/procfs
-  version: 65c1f6f8f0fc1e2185eb9863a3bc751496404259
+  version: 185b4288413d2a0dd0806f78c90dde719829e5ae
   subpackages:
+  - internal/util
+  - nfs
   - xfs
 - name: github.com/sirupsen/logrus
   version: ad15b42461921f1fb3529b058c6786c6a45d5162
 - name: github.com/spf13/pflag
   version: 583c0c0531f06d5278b7d917446061adc344b5cd
 - name: golang.org/x/crypto
-  version: 49796115aa4b964c318aad4f3084fdb41e9aa067
+  version: 0c41d7ab0a0ee717d4590a44bcb987dfd9e183eb
   subpackages:
   - ssh/terminal
 - name: golang.org/x/net
@@ -139,7 +141,7 @@ imports:
   subpackages:
   - rate
 - name: google.golang.org/appengine
-  version: 12d5545dc1cfa6047a286d5e853841b6471f4c19
+  version: ae0ab99deb4dc413a2b4bd6c8bdd0eb67f1e4d06
   subpackages:
   - internal
   - internal/app_identity
@@ -272,6 +274,7 @@ imports:
   - plugin/pkg/client/auth/gcp
   - rest
   - rest/watch
+  - restmapper
   - third_party/forked/golang/template
   - tools/auth
   - tools/cache
